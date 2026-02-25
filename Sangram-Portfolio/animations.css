@@ -1,0 +1,229 @@
+/* ===== Scroll Reveal Animations ===== */
+.reveal-up,
+.reveal-left,
+.reveal-right {
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: var(--delay, 0s);
+}
+
+.reveal-up {
+    transform: translateY(40px);
+}
+
+.reveal-left {
+    transform: translateX(-40px);
+}
+
+.reveal-right {
+    transform: translateX(40px);
+}
+
+.reveal-up.revealed,
+.reveal-left.revealed,
+.reveal-right.revealed {
+    opacity: 1;
+    transform: translate(0, 0);
+}
+
+/* ===== Animated Gradient Background ===== */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        -45deg,
+        rgba(108, 92, 231, 0.08),
+        rgba(162, 155, 254, 0.05),
+        rgba(253, 121, 168, 0.05),
+        rgba(108, 92, 231, 0.08)
+    );
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    z-index: 0;
+}
+
+/* ===== Floating Shapes ===== */
+@keyframes floatShape1 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(30px, -30px) rotate(90deg); }
+    50% { transform: translate(-20px, -60px) rotate(180deg); }
+    75% { transform: translate(-40px, -20px) rotate(270deg); }
+}
+
+@keyframes floatShape2 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(-40px, 30px) rotate(120deg); }
+    66% { transform: translate(30px, -40px) rotate(240deg); }
+}
+
+/* ===== Skill Bar Animation ===== */
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.skill-bar-fill.animated {
+    background: linear-gradient(
+        90deg,
+        #6c5ce7 0%,
+        #a29bfe 25%,
+        #fd79a8 50%,
+        #a29bfe 75%,
+        #6c5ce7 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+}
+
+/* ===== Counter Animation ===== */
+@keyframes countUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Card Tilt Glow ===== */
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(108, 92, 231, 0.1) 0%,
+        transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 1;
+    border-radius: var(--border-radius);
+}
+
+.project-card:hover::before {
+    opacity: 1;
+}
+
+/* ===== Navbar Link Hover ===== */
+.nav-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--accent-primary);
+    transition: width 0.3s ease, left 0.3s ease;
+    border-radius: 1px;
+}
+
+.nav-link:hover::before {
+    width: 100%;
+    left: 0;
+}
+
+/* ===== Section Divider Glow ===== */
+.section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+    opacity: 0.3;
+}
+
+/* ===== Achievement Card Shine ===== */
+@keyframes shine {
+    0% { left: -100%; }
+    100% { left: 200%; }
+}
+
+.achievement-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.03),
+        transparent
+    );
+    transition: none;
+}
+
+.achievement-card:hover::before {
+    animation: shine 0.8s ease;
+}
+
+/* ===== Loading Animation ===== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ===== Stagger Children ===== */
+.skill-items .skill-item:nth-child(1) { --delay: 0s; }
+.skill-items .skill-item:nth-child(2) { --delay: 0.1s; }
+.skill-items .skill-item:nth-child(3) { --delay: 0.15s; }
+.skill-items .skill-item:nth-child(4) { --delay: 0.2s; }
+
+/* ===== Timeline Animation ===== */
+.timeline-item {
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.timeline-item.revealed {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* ===== Glow Pulse for Timeline Dot ===== */
+@keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(108, 92, 231, 0.3); }
+    50% { box-shadow: 0 0 25px rgba(108, 92, 231, 0.6); }
+}
+
+.timeline-dot {
+    animation: glowPulse 3s ease-in-out infinite;
+}
+
+/* ===== Hero Badge Glow ===== */
+@keyframes badgeGlow {
+    0%, 100% { box-shadow: 0 0 10px rgba(108, 92, 231, 0.1); }
+    50% { box-shadow: 0 0 20px rgba(108, 92, 231, 0.2); }
+}
+
+.hero-badge {
+    animation: badgeGlow 3s ease-in-out infinite;
+}
