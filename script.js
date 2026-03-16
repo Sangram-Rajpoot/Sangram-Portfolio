@@ -579,14 +579,10 @@
 // });
 /* ============================================
    SANGRAM RAJPOOT - PREMIUM PORTFOLIO JS
-   CLEAN + FIXED VERSION
+   SAFE VERSION
 ============================================ */
 
 document.addEventListener("DOMContentLoaded", () => {
-
-    /* ========================
-       CONFIG
-    ======================== */
 
     const TYPING_WORDS = [
         "Java Developer",
@@ -598,67 +594,66 @@ document.addEventListener("DOMContentLoaded", () => {
     const DELETE_SPEED = 50;
     const PAUSE = 2000;
 
-
-    /* ========================
-       DOM ELEMENTS
-    ======================== */
-
     const preloader = document.getElementById("preloader");
     const scrollProgress = document.getElementById("scrollProgress");
     const navbar = document.getElementById("navbar");
     const navMenu = document.getElementById("navMenu");
     const navHamburger = document.getElementById("navHamburger");
     const themeToggle = document.getElementById("themeToggle");
-
     const typingText = document.getElementById("typingText");
-
     const backToTop = document.getElementById("backToTop");
-
     const contactForm = document.getElementById("contactForm");
     const formSuccess = document.getElementById("formSuccess");
-
     const cursorDot = document.getElementById("cursorDot");
     const cursorOutline = document.getElementById("cursorOutline");
-
 
     /* ========================
        PRELOADER
     ======================== */
 
     window.addEventListener("load", () => {
-        preloader.classList.add("hidden");
-        document.body.style.overflow = "auto";
+
+        if (preloader) {
+            preloader.classList.add("hidden");
+            document.body.style.overflow = "auto";
+        }
+
     });
 
-
     /* ========================
-       SCROLL PROGRESS + NAVBAR
+       SCROLL PROGRESS
     ======================== */
 
     function onScroll() {
 
         const scrollTop = window.scrollY;
         const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const scrollPercent = scrollTop / docHeight;
 
-        scrollProgress.style.width = scrollPercent * 100 + "%";
+        if (scrollProgress) {
+            scrollProgress.style.width = (scrollTop / docHeight) * 100 + "%";
+        }
 
-        if (scrollTop > 50) navbar.classList.add("scrolled");
-        else navbar.classList.remove("scrolled");
+        if (navbar) {
+            if (scrollTop > 50) navbar.classList.add("scrolled");
+            else navbar.classList.remove("scrolled");
+        }
 
-        if (scrollTop > 500) backToTop.classList.add("visible");
-        else backToTop.classList.remove("visible");
+        if (backToTop) {
+            if (scrollTop > 500) backToTop.classList.add("visible");
+            else backToTop.classList.remove("visible");
+        }
 
     }
 
     window.addEventListener("scroll", onScroll, { passive: true });
-
 
     /* ========================
        TYPING EFFECT
     ======================== */
 
     function initTyping() {
+
+        if (!typingText) return;
 
         let wordIndex = 0;
         let charIndex = 0;
@@ -687,11 +682,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             setTimeout(type, delay);
+
         }
 
         type();
     }
-
 
     /* ========================
        THEME TOGGLE
@@ -703,30 +698,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
         document.documentElement.setAttribute("data-theme", saved);
 
+        if (!themeToggle) return;
+
         themeToggle.addEventListener("click", () => {
 
             const current = document.documentElement.getAttribute("data-theme");
-
             const next = current === "dark" ? "light" : "dark";
 
             document.documentElement.setAttribute("data-theme", next);
-
             localStorage.setItem("sr-theme", next);
 
         });
+
     }
 
-
     /* ========================
-       MOBILE NAVIGATION
+       MOBILE NAV
     ======================== */
 
     function initMobileNav() {
 
+        if (!navHamburger || !navMenu) return;
+
         navHamburger.addEventListener("click", () => {
 
             navHamburger.classList.toggle("active");
-
             navMenu.classList.toggle("open");
 
         });
@@ -736,7 +732,6 @@ document.addEventListener("DOMContentLoaded", () => {
             link.addEventListener("click", () => {
 
                 navHamburger.classList.remove("active");
-
                 navMenu.classList.remove("open");
 
             });
@@ -745,28 +740,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
     /* ========================
        BACK TO TOP
     ======================== */
 
-    backToTop.addEventListener("click", () => {
+    if (backToTop) {
 
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
+        backToTop.addEventListener("click", () => {
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
         });
 
-    });
-
+    }
 
     /* ========================
-       CUSTOM CURSOR
+       CURSOR
     ======================== */
 
     function initCursor() {
 
         if (window.innerWidth < 768) return;
+        if (!cursorDot || !cursorOutline) return;
 
         let mouseX = 0;
         let mouseY = 0;
@@ -793,15 +791,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 `translate(${outlineX}px, ${outlineY}px)`;
 
             requestAnimationFrame(animate);
+
         }
 
         animate();
 
     }
 
-
     /* ========================
-       BUTTON RIPPLE
+       RIPPLE
     ======================== */
 
     function initRipple() {
@@ -811,17 +809,13 @@ document.addEventListener("DOMContentLoaded", () => {
             btn.addEventListener("click", e => {
 
                 const ripple = document.createElement("span");
-
                 ripple.classList.add("ripple");
 
                 const rect = btn.getBoundingClientRect();
-
                 const size = Math.max(rect.width, rect.height);
 
                 ripple.style.width = ripple.style.height = size + "px";
-
                 ripple.style.left = e.clientX - rect.left - size / 2 + "px";
-
                 ripple.style.top = e.clientY - rect.top - size / 2 + "px";
 
                 btn.appendChild(ripple);
@@ -833,7 +827,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
     }
-
 
     /* ========================
        CONTACT FORM
@@ -849,11 +842,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const submitBtn = contactForm.querySelector(".form-submit");
 
+            if (!submitBtn) return;
+
             submitBtn.disabled = true;
-
-            const originalText = submitBtn.innerText;
-
-            submitBtn.innerText = "Sending...";
 
             try {
 
@@ -865,10 +856,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     headers: { Accept: "application/json" }
                 });
 
-                if (response.ok) {
+                if (response.ok && formSuccess) {
 
                     formSuccess.classList.add("show");
-
                     contactForm.reset();
 
                     setTimeout(() => {
@@ -878,34 +868,24 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
             } catch {
-
                 alert("Error sending message");
-
             }
 
             submitBtn.disabled = false;
-
-            submitBtn.innerText = originalText;
 
         });
 
     }
 
-
     /* ========================
-       INITIALIZE EVERYTHING
+       INIT
     ======================== */
 
     initTyping();
-
     initTheme();
-
     initCursor();
-
     initMobileNav();
-
     initRipple();
-
     initContactForm();
 
 });
