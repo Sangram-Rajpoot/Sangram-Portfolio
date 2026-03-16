@@ -309,12 +309,12 @@ window.addEventListener('load', () => {
            cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px)`
         });
 
-        function animateOutline() {
-            outlineX += (mouseX - outlineX) * 0.15;
-            outlineY += (mouseY - outlineY) * 0.15;
-           cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px)`
-            requestAnimationFrame(animateOutline);
-        }
+       function animateOutline() {
+    outlineX += (mouseX - outlineX) * 0.15;
+    outlineY += (mouseY - outlineY) * 0.15;
+    cursorOutline.style.transform = `translate(${outlineX}px, ${outlineY}px)`; // Fix
+    requestAnimationFrame(animateOutline);
+}
         animateOutline();
 
         // Hover effect on interactive elements
