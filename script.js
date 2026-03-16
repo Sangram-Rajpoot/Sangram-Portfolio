@@ -76,16 +76,16 @@ window.addEventListener('load', () => {
     //     }
     // }
 
-    // function onAllImagesLoaded() {
-    //     canvasReady = true;
-    //     resizeCanvas();
-    //     drawFrame(0);
-    //     setTimeout(() => {
-    //         preloader.classList.add('loaded');
-    //         document.body.style.overflow = '';
-    //         initScrollAnimations();
-    //     }, 500);
-    // }
+    function onAllImagesLoaded() {
+        canvasReady = true;
+        resizeCanvas();
+        drawFrame(0);
+        setTimeout(() => {
+            preloader.classList.add('loaded');
+            document.body.style.overflow = '';
+            initScrollAnimations();
+        }, 500);
+    }
 
     // ===== Canvas =====
     function resizeCanvas() {
