@@ -39,11 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentFrame = 0;
     let canvasReady = false;
  // ============ Preloader ============
+// Sahi tariqa
 window.addEventListener('load', () => {
     const preloader = document.getElementById('preloader');
-    window.addEventListener('load', () => {
-preloader.classList.add('hidden');
-});
+    preloader.classList.add('hidden');
+    document.body.style.overflow = 'auto'; // Scroll enable karein
 });
     // // ===== Preload Images =====
     // function preloadImages() {
