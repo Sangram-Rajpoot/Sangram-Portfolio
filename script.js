@@ -579,327 +579,333 @@
 // });
 /* ============================================
    SANGRAM RAJPOOT - PREMIUM PORTFOLIO JS
-   ============================================ */
+   CLEAN + FIXED VERSION
+============================================ */
 
-document.addEventListener('DOMContentLoaded', () => {
-    // ===== 1. Configuration =====
-    const FRAME_COUNT = 80;
-    const FRAME_PATH = './assets/frames/frame_';
-    const TYPING_WORDS = ['Java Developer', 'Backend Engineer', 'Spring Boot Specialist'];
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* ========================
+       CONFIG
+    ======================== */
+
+    const TYPING_WORDS = [
+        "Java Developer",
+        "Backend Engineer",
+        "Spring Boot Specialist"
+    ];
+
     const TYPING_SPEED = 100;
-    const TYPING_DELETE_SPEED = 50;
-    const TYPING_PAUSE = 2000;
+    const DELETE_SPEED = 50;
+    const PAUSE = 2000;
 
-    // ===== 2. DOM Elements =====
-    const preloader = document.getElementById('preloader');
-    const heroCanvas = document.getElementById('heroCanvas');
-    const ctx = heroCanvas.getContext('2d');
-    const scrollProgress = document.getElementById('scrollProgress');
-    const navbar = document.getElementById('navbar');
-    const navMenu = document.getElementById('navMenu');
-    const navHamburger = document.getElementById('navHamburger');
-    const themeToggle = document.getElementById('themeToggle');
-    const voiceBtn = document.getElementById('voiceBtn');
-    const voiceOverlay = document.getElementById('voiceOverlay');
-    const voiceClose = document.getElementById('voiceClose');
-    const voiceStatus = document.getElementById('voiceStatus');
-    const voiceTranscript = document.getElementById('voiceTranscript');
-    const typingText = document.getElementById('typingText');
-    const backToTop = document.getElementById('backToTop');
-    const contactForm = document.getElementById('contactForm');
-    const formSuccess = document.getElementById('formSuccess');
-    const cursorDot = document.getElementById('cursorDot');
-    const cursorOutline = document.getElementById('cursorOutline');
 
-    // ===== 3. State Management =====
-    const images = [];
-    let loadedCount = 0;
-    let currentFrame = 0;
-    let canvasReady = false;
+    /* ========================
+       DOM ELEMENTS
+    ======================== */
 
-    // ===== 4. Preloader & Image Loading Logic =====
-    function preloadImages() {
-        for (let i = 0; i < FRAME_COUNT; i++) {
-            const img = new Image();
-            const num = String(i).padStart(2, '0');
-            // Make sure the naming convention matches: frame_00_delay-0.062s.png
-            img.src = `${FRAME_PATH}${num}_delay-0.062s.png`; 
-            
-            img.onload = imageLoaded;
-            img.onerror = imageLoaded; // Count errors too so the site still loads
-            images.push(img);
-        }
-    }
+    const preloader = document.getElementById("preloader");
+    const scrollProgress = document.getElementById("scrollProgress");
+    const navbar = document.getElementById("navbar");
+    const navMenu = document.getElementById("navMenu");
+    const navHamburger = document.getElementById("navHamburger");
+    const themeToggle = document.getElementById("themeToggle");
 
-    function imageLoaded() {
-        loadedCount++;
-        if (loadedCount === FRAME_COUNT) {
-            onAllImagesLoaded();
-        }
-    }
+    const typingText = document.getElementById("typingText");
 
-    function onAllImagesLoaded() {
-        canvasReady = true;
-        preloader.classList.add('hidden');
-        document.body.style.overflow = 'auto'; // Re-enable scrolling
-        resizeCanvas();
-        drawFrame(0);
-        initScrollAnimations();
-    }
+    const backToTop = document.getElementById("backToTop");
 
-    // ===== 5. Canvas Graphics Logic =====
-    function resizeCanvas() {
-        heroCanvas.width = window.innerWidth;
-        heroCanvas.height = window.innerHeight;
-        if (canvasReady) drawFrame(currentFrame);
-    }
+    const contactForm = document.getElementById("contactForm");
+    const formSuccess = document.getElementById("formSuccess");
 
-    function drawFrame(index) {
-        if (!canvasReady || index < 0 || index >= images.length) return;
-        const img = images[index];
-        if (!img.complete) return;
+    const cursorDot = document.getElementById("cursorDot");
+    const cursorOutline = document.getElementById("cursorOutline");
 
-        ctx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
-        
-        const canvasRatio = heroCanvas.width / heroCanvas.height;
-        const imgRatio = img.naturalWidth / img.naturalHeight;
 
-        let drawW, drawH, drawX, drawY;
-        if (imgRatio > canvasRatio) {
-            drawH = heroCanvas.height;
-            drawW = drawH * imgRatio;
-            drawX = (heroCanvas.width - drawW) / 2;
-            drawY = 0;
-        } else {
-            drawW = heroCanvas.width;
-            drawH = drawW / imgRatio;
-            drawX = 0;
-            drawY = (heroCanvas.height - drawH) / 2;
-        }
-        ctx.drawImage(img, drawX, drawY, drawW, drawH);
-    }
+    /* ========================
+       PRELOADER
+    ======================== */
 
-    // ===== 6. Scroll & Animation Handlers =====
+    window.addEventListener("load", () => {
+        preloader.classList.add("hidden");
+        document.body.style.overflow = "auto";
+    });
+
+
+    /* ========================
+       SCROLL PROGRESS + NAVBAR
+    ======================== */
+
     function onScroll() {
+
         const scrollTop = window.scrollY;
         const docHeight = document.documentElement.scrollHeight - window.innerHeight;
         const scrollPercent = scrollTop / docHeight;
 
-        // Progress Bar
-        scrollProgress.style.width = (scrollPercent * 100) + '%';
+        scrollProgress.style.width = scrollPercent * 100 + "%";
 
-        // Navbar Styling
-        if (scrollTop > 50) navbar.classList.add('scrolled');
-        else navbar.classList.remove('scrolled');
+        if (scrollTop > 50) navbar.classList.add("scrolled");
+        else navbar.classList.remove("scrolled");
 
-        // Back to Top Visibility
-        if (scrollTop > 500) backToTop.classList.add('visible');
-        else backToTop.classList.remove('visible');
+        if (scrollTop > 500) backToTop.classList.add("visible");
+        else backToTop.classList.remove("visible");
 
-        // Canvas Frame Sequence logic
-        const heroSection = document.getElementById('hero');
-        if (heroSection && canvasReady) {
-            const rect = heroSection.getBoundingClientRect();
-            const heroHeight = heroSection.offsetHeight - window.innerHeight;
-            if (rect.top <= 0 && rect.bottom >= window.innerHeight) {
-                const progress = Math.min(Math.max(-rect.top / heroHeight, 0), 1);
-                const frameIndex = Math.min(Math.floor(progress * (FRAME_COUNT - 1)), FRAME_COUNT - 1);
-                if (frameIndex !== currentFrame) {
-                    currentFrame = frameIndex;
-                    drawFrame(currentFrame);
-                }
-            }
-        }
     }
 
-    function initScrollAnimations() {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('revealed');
-                    
-                    // Skill bar fill logic
-                    const fills = entry.target.querySelectorAll('.skill-fill');
-                    fills.forEach(fill => {
-                        const width = fill.getAttribute('data-width');
-                        fill.style.width = width + '%'; // Dynamic width assignment
-                        fill.classList.add('animated');
-                    });
+    window.addEventListener("scroll", onScroll, { passive: true });
 
-                    // Counter logic
-                    const counters = entry.target.querySelectorAll('.counter-number');
-                    counters.forEach(counter => animateCounter(counter));
-                }
-            });
-        }, { threshold: 0.15 });
 
-        document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right, .skill-category').forEach(el => {
-            observer.observe(el);
-        });
-    }
+    /* ========================
+       TYPING EFFECT
+    ======================== */
 
-    function animateCounter(el) {
-        const target = parseInt(el.getAttribute('data-target'));
-        if (!target || el.dataset.animated === 'true') return;
-        el.dataset.animated = 'true';
+    function initTyping() {
 
-        let current = 0;
-        const increment = target / 50;
-        const timer = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-                current = target;
-                clearInterval(timer);
-            }
-            el.textContent = Math.floor(current);
-        }, 30);
-    }
-
-    // ===== 7. Interactive UI Features =====
-    function initTypingEffect() {
         let wordIndex = 0;
         let charIndex = 0;
-        let isDeleting = false;
+        let deleting = false;
 
         function type() {
-            const currentWord = TYPING_WORDS[wordIndex];
-            typingText.textContent = isDeleting 
-                ? currentWord.substring(0, charIndex--) 
-                : currentWord.substring(0, charIndex++);
 
-            let delay = isDeleting ? TYPING_DELETE_SPEED : TYPING_SPEED;
+            const word = TYPING_WORDS[wordIndex];
 
-            if (!isDeleting && charIndex === currentWord.length) {
-                delay = TYPING_PAUSE;
-                isDeleting = true;
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                wordIndex = (wordIndex + 1) % TYPING_WORDS.length;
-                delay = 500;
+            if (deleting) charIndex--;
+            else charIndex++;
+
+            typingText.textContent = word.substring(0, charIndex);
+
+            let delay = deleting ? DELETE_SPEED : TYPING_SPEED;
+
+            if (!deleting && charIndex === word.length) {
+                delay = PAUSE;
+                deleting = true;
             }
+
+            else if (deleting && charIndex === 0) {
+                deleting = false;
+                wordIndex = (wordIndex + 1) % TYPING_WORDS.length;
+                delay = 300;
+            }
+
             setTimeout(type, delay);
         }
+
         type();
     }
 
+
+    /* ========================
+       THEME TOGGLE
+    ======================== */
+
     function initTheme() {
-        const savedTheme = localStorage.getItem('sr-theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        themeToggle.addEventListener('click', () => {
-            const current = document.documentElement.getAttribute('data-theme');
-            const next = current === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', next);
-            localStorage.setItem('sr-theme', next);
+
+        const saved = localStorage.getItem("sr-theme") || "dark";
+
+        document.documentElement.setAttribute("data-theme", saved);
+
+        themeToggle.addEventListener("click", () => {
+
+            const current = document.documentElement.getAttribute("data-theme");
+
+            const next = current === "dark" ? "light" : "dark";
+
+            document.documentElement.setAttribute("data-theme", next);
+
+            localStorage.setItem("sr-theme", next);
+
         });
     }
 
-    function initCursor() {
-        if (window.innerWidth <= 768) return;
-        let mouseX = 0, mouseY = 0;
-        let outlineX = 0, outlineY = 0;
 
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            cursorDot.style.left = mouseX + 'px';
-            cursorDot.style.top = mouseY + 'px';
-        });
-
-        function animateOutline() {
-            outlineX += (mouseX - outlineX) * 0.15;
-            outlineY += (mouseY - outlineY) * 0.15;
-            cursorOutline.style.left = outlineX + 'px';
-            cursorOutline.style.top = outlineY + 'px';
-            requestAnimationFrame(animateOutline);
-        }
-        animateOutline();
-
-        document.querySelectorAll('a, button, .project-card, .skill-category').forEach(el => {
-            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-        });
-    }
+    /* ========================
+       MOBILE NAVIGATION
+    ======================== */
 
     function initMobileNav() {
-        navHamburger.addEventListener('click', () => {
-            navHamburger.classList.toggle('active');
-            navMenu.classList.toggle('open');
+
+        navHamburger.addEventListener("click", () => {
+
+            navHamburger.classList.toggle("active");
+
+            navMenu.classList.toggle("open");
+
         });
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                navHamburger.classList.remove('active');
-                navMenu.classList.remove('open');
+
+        document.querySelectorAll(".nav-link").forEach(link => {
+
+            link.addEventListener("click", () => {
+
+                navHamburger.classList.remove("active");
+
+                navMenu.classList.remove("open");
+
             });
+
         });
+
     }
+
+
+    /* ========================
+       BACK TO TOP
+    ======================== */
+
+    backToTop.addEventListener("click", () => {
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    });
+
+
+    /* ========================
+       CUSTOM CURSOR
+    ======================== */
+
+    function initCursor() {
+
+        if (window.innerWidth < 768) return;
+
+        let mouseX = 0;
+        let mouseY = 0;
+
+        let outlineX = 0;
+        let outlineY = 0;
+
+        document.addEventListener("mousemove", e => {
+
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            cursorDot.style.transform =
+                `translate(${mouseX}px, ${mouseY}px)`;
+
+        });
+
+        function animate() {
+
+            outlineX += (mouseX - outlineX) * 0.15;
+            outlineY += (mouseY - outlineY) * 0.15;
+
+            cursorOutline.style.transform =
+                `translate(${outlineX}px, ${outlineY}px)`;
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+    }
+
+
+    /* ========================
+       BUTTON RIPPLE
+    ======================== */
 
     function initRipple() {
-        document.querySelectorAll('.btn').forEach(btn => {
-            btn.addEventListener('click', function (e) {
-                const ripple = document.createElement('span');
-                ripple.classList.add('ripple');
-                const rect = this.getBoundingClientRect();
+
+        document.querySelectorAll(".btn").forEach(btn => {
+
+            btn.addEventListener("click", e => {
+
+                const ripple = document.createElement("span");
+
+                ripple.classList.add("ripple");
+
+                const rect = btn.getBoundingClientRect();
+
                 const size = Math.max(rect.width, rect.height);
-                ripple.style.width = ripple.style.height = size + 'px';
-                ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
-                ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
-                this.appendChild(ripple);
+
+                ripple.style.width = ripple.style.height = size + "px";
+
+                ripple.style.left = e.clientX - rect.left - size / 2 + "px";
+
+                ripple.style.top = e.clientY - rect.top - size / 2 + "px";
+
+                btn.appendChild(ripple);
+
                 setTimeout(() => ripple.remove(), 600);
+
             });
+
         });
+
     }
+
+
+    /* ========================
+       CONTACT FORM
+    ======================== */
 
     function initContactForm() {
+
         if (!contactForm) return;
-        contactForm.addEventListener('submit', async (e) => {
+
+        contactForm.addEventListener("submit", async e => {
+
             e.preventDefault();
-            const submitBtn = contactForm.querySelector('.form-submit');
+
+            const submitBtn = contactForm.querySelector(".form-submit");
+
             submitBtn.disabled = true;
+
+            const originalText = submitBtn.innerText;
+
+            submitBtn.innerText = "Sending...";
+
             try {
+
+                const formData = new FormData(contactForm);
+
                 const response = await fetch(contactForm.action, {
-                    method: 'POST',
-                    body: new FormData(contactForm),
-                    headers: { 'Accept': 'application/json' }
+                    method: "POST",
+                    body: formData,
+                    headers: { Accept: "application/json" }
                 });
+
                 if (response.ok) {
-                    formSuccess.style.display = 'block';
+
+                    formSuccess.classList.add("show");
+
                     contactForm.reset();
-                    setTimeout(() => formSuccess.style.display = 'none', 5000);
+
+                    setTimeout(() => {
+                        formSuccess.classList.remove("show");
+                    }, 5000);
+
                 }
-            } catch (err) {
-                alert('Connection Error!');
+
+            } catch {
+
+                alert("Error sending message");
+
             }
+
             submitBtn.disabled = false;
+
+            submitBtn.innerText = originalText;
+
         });
+
     }
 
-    function initSmoothScroll() {
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', (e) => {
-                e.preventDefault();
-                const target = document.querySelector(anchor.getAttribute('href'));
-                if (target) target.scrollIntoView({ behavior: 'smooth' });
-            });
-        });
-    }
 
-    // ===== 8. Initialization Call =====
-    document.body.style.overflow = 'hidden'; // Lock scroll until loaded
-    preloadImages();
+    /* ========================
+       INITIALIZE EVERYTHING
+    ======================== */
+
+    initTyping();
+
     initTheme();
-    initTypingEffect();
+
     initCursor();
+
     initMobileNav();
-    initBackToTop();
+
     initRipple();
+
     initContactForm();
-    initSmoothScroll();
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', resizeCanvas);
-
-    // Safety Fallback (8 seconds)
-    setTimeout(() => {
-        if (!canvasReady) onAllImagesLoaded();
-    }, 8000);
 });
