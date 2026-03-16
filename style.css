@@ -9,6 +9,7 @@
     --bg-secondary: #12121a;
     --bg-card: rgba(255, 255, 255, 0.04);
     --bg-card-hover: rgba(255, 255, 255, 0.08);
+    --accent3: #00e676;
     --accent: #00d4ff;
     --accent2: #7b61ff;
     --gradient: linear-gradient(135deg, #00d4ff, #7b61ff);
@@ -32,6 +33,7 @@
     --bg-secondary: #ffffff;
     --bg-card: rgba(255, 255, 255, 0.7);
     --bg-card-hover: rgba(255, 255, 255, 0.9);
+    --accent3: #00e676;
     --accent: #0066ff;
     --accent2: #6b4ce6;
     --gradient: linear-gradient(135deg, #0066ff, #6b4ce6);
