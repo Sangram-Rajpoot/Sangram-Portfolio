@@ -13,8 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ===== DOM Elements =====
     const preloader = document.getElementById('preloader');
-    const preloaderBar = document.getElementById('preloaderBar');
-    const preloaderPercent = document.getElementById('preloaderPercent');
     const heroCanvas = document.getElementById('heroCanvas');
     const ctx = heroCanvas.getContext('2d');
     const scrollProgress = document.getElementById('scrollProgress');
