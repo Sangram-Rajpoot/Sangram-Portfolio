@@ -41,10 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
  // ============ Preloader ============
 window.addEventListener('load', () => {
     const preloader = document.getElementById('preloader');
-    setTimeout(() => {
-        preloader.classList.add('hidden');
-        initAnimations();
-    }, 2000);
+    window.addEventListener('load', () => {
+preloader.classList.add('hidden');
+});
 });
     // // ===== Preload Images =====
     // function preloadImages() {
