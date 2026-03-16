@@ -69,7 +69,9 @@ html {
 html::-webkit-scrollbar {
     width: 6px;
 }
-
+html::-webkit-scrollbar-thumb:hover{
+background:var(--accent2);
+}
 html::-webkit-scrollbar-track {
     background: var(--bg-secondary);
 }
@@ -156,6 +158,10 @@ ul {
     transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
     transform: translate(-50%, -50%);
     opacity: 0.6;
+}
+.cursor-dot,
+.cursor-outline {
+    transform: translate(0,0);
 }
 
 .cursor-hover .cursor-outline {
@@ -291,6 +297,7 @@ ul {
     border-radius: 50%;
     border: 2px solid transparent;
     animation: loaderSpin 1.5s linear infinite;
+    will-change: transform;
 }
 .loader-ring:nth-child(1) {
     width: 100%;
@@ -1117,7 +1124,7 @@ ul {
 .project-card:hover {
     border-color: var(--border-hover);
     box-shadow: var(--shadow);
-    transform: translateY(-8px);
+    transform: translateY(-8px) scale(1.02);
 }
 
 .project-image {
@@ -1646,7 +1653,8 @@ ul {
 .reveal-left,
 .reveal-right {
     opacity: 0;
-    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.8s cubic-bezier(0.16,1,0.3,1), opacity 0.8s ease;
+    will-change: transform, opacity;
 }
 
 .reveal-up {
@@ -1767,7 +1775,7 @@ ul {
     padding: 8px 20px;
     border-radius: 50px;
     font-size: 0.85rem;
-    color: var(--accent-secondary);
+    color: var(--accent2);
     border: 1px solid rgba(162, 155, 254, 0.2);
     background: rgba(108, 92, 231, 0.08);
     margin-bottom: 32px;
@@ -1794,7 +1802,9 @@ ul {
         transform: scale(1.4); 
     }
 }
-
+img{
+image-rendering: auto;
+}
 /* Fade Up Animation */
 @keyframes fadeInUp {
     from {
@@ -1805,4 +1815,15 @@ ul {
         opacity: 1;
         transform: translateY(0);
     }
+}
+@media (max-width:768px){
+
+.floating-shapes{
+display:none;
+}
+
+.hero-overlay{
+display:none;
+}
+
 }
