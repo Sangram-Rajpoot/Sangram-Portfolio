@@ -40,45 +40,52 @@ document.addEventListener('DOMContentLoaded', () => {
     let loadedCount = 0;
     let currentFrame = 0;
     let canvasReady = false;
+ // ============ Preloader ============
+window.addEventListener('load', () => {
+    const preloader = document.getElementById('preloader');
+    setTimeout(() => {
+        preloader.classList.add('hidden');
+        initAnimations();
+    }, 2000);
+});
+    // // ===== Preload Images =====
+    // function preloadImages() {
+    //     for (let i = 0; i < FRAME_COUNT; i++) {
+    //         const img = new Image();
+    //         const num = String(i).padStart(2, '0');
+    //         img.src = `${FRAME_PATH}${num}_delay-0.062s.png`;
+    //         img.onload = () => {
+    //             loadedCount++;
+    //             const percent = Math.round((loadedCount / FRAME_COUNT) * 100);
+    //             preloaderBar.style.width = percent + '%';
+    //             preloaderPercent.textContent = percent + '%';
+    //             if (loadedCount === FRAME_COUNT) {
+    //                 onAllImagesLoaded();
+    //             }
+    //         };
+    //         img.onerror = () => {
+    //             loadedCount++;
+    //             const percent = Math.round((loadedCount / FRAME_COUNT) * 100);
+    //             preloaderBar.style.width = percent + '%';
+    //             preloaderPercent.textContent = percent + '%';
+    //             if (loadedCount === FRAME_COUNT) {
+    //                 onAllImagesLoaded();
+    //             }
+    //         };
+    //         images.push(img);
+    //     }
+    // }
 
-    // ===== Preload Images =====
-    function preloadImages() {
-        for (let i = 0; i < FRAME_COUNT; i++) {
-            const img = new Image();
-            const num = String(i).padStart(2, '0');
-            img.src = `${FRAME_PATH}${num}_delay-0.062s.png`;
-            img.onload = () => {
-                loadedCount++;
-                const percent = Math.round((loadedCount / FRAME_COUNT) * 100);
-                preloaderBar.style.width = percent + '%';
-                preloaderPercent.textContent = percent + '%';
-                if (loadedCount === FRAME_COUNT) {
-                    onAllImagesLoaded();
-                }
-            };
-            img.onerror = () => {
-                loadedCount++;
-                const percent = Math.round((loadedCount / FRAME_COUNT) * 100);
-                preloaderBar.style.width = percent + '%';
-                preloaderPercent.textContent = percent + '%';
-                if (loadedCount === FRAME_COUNT) {
-                    onAllImagesLoaded();
-                }
-            };
-            images.push(img);
-        }
-    }
-
-    function onAllImagesLoaded() {
-        canvasReady = true;
-        resizeCanvas();
-        drawFrame(0);
-        setTimeout(() => {
-            preloader.classList.add('loaded');
-            document.body.style.overflow = '';
-            initScrollAnimations();
-        }, 500);
-    }
+    // function onAllImagesLoaded() {
+    //     canvasReady = true;
+    //     resizeCanvas();
+    //     drawFrame(0);
+    //     setTimeout(() => {
+    //         preloader.classList.add('loaded');
+    //         document.body.style.overflow = '';
+    //         initScrollAnimations();
+    //     }, 500);
+    // }
 
     // ===== Canvas =====
     function resizeCanvas() {
