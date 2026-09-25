@@ -15,7 +15,7 @@ function enterPortfolio() {
   document.body.style.overflow = '';
   intro.classList.add('leaving');
   try { sessionStorage.setItem('sr-intro-seen', '1'); } catch {}
-  window.setTimeout(() => { intro.hidden = true; $('.monogram').focus({ preventScroll: true }); }, reducedMotion ? 0 : 1000);
+  window.setTimeout(() => { intro.hidden = true; $('.wordmark').focus({ preventScroll: true }); }, reducedMotion ? 0 : 1000);
 }
 if (!introSeen && !reducedMotion && !location.hash) {
   intro.hidden = false;
@@ -38,7 +38,8 @@ let scrollQueued = false;
 const updateScroll = () => {
   const max = document.documentElement.scrollHeight - innerHeight;
   $('.reading-progress').style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
-  if (!reducedMotion && scrollY < innerHeight * 1.3) $('.hero-photo').style.transform = `translateY(${scrollY * 0.15}px) scale(${1 + Math.min(scrollY / innerHeight, 1) * 0.08})`;
+  if (!reducedMotion && scrollY < innerHeight * 1.3) $('.hero-photo').style.transform = `translateY(${scrollY * 0.08}px) scale(${1 + Math.min(scrollY / innerHeight, 1) * 0.04})`;
+  $('.connect-pill').classList.toggle('is-hidden', $('#contact').getBoundingClientRect().top < innerHeight);
   scrollQueued = false;
 };
 window.addEventListener('scroll', () => { if (!scrollQueued) { scrollQueued = true; requestAnimationFrame(updateScroll); } }, { passive: true });
