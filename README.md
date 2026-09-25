@@ -1,6 +1,6 @@
 # Sangram Rajpoot — Portfolio
 
-A responsive portfolio built with HTML, CSS, JavaScript, and Vite. The crimson and black palette, large typography, and editorial layout follow the visual direction of [Meer Mohsin's portfolio](https://www.meermohsin.me/), adapted to Sangram's content.
+A responsive portfolio built with HTML, CSS, JavaScript, and Vite. The crimson and black palette, moving hero type, layered portrait, oversized section headings, and centered project displays follow the visual direction of [Meer Mohsin's portfolio](https://www.meermohsin.me/), adapted to Sangram's content.
 
 ![Portfolio preview](docs/preview.jpg)
 
@@ -25,6 +25,6 @@ Deploy the generated `dist` directory. The relative asset base supports domain a
 - Edit project dialog content and project links in `script.js`.
 - The contact form retains the existing Formspree endpoint. Delivery depends on that account's configuration.
 - Navigation, project dialogs, theme switching, and reduced-motion preferences are supported. Voice navigation is shown only in browsers with speech recognition and starts after the visitor requests it.
-- The hero uses an AI-stylized version of the supplied portrait; the original portrait remains in the journey section.
-- Motion uses CSS and JavaScript parallax and reveal effects. This implementation does not reproduce the reference site's WebGL 3D scenes.
+- The hero uses an AI-assisted portrait cutout derived from the supplied photo. The original, unmodified photo remains in the journey section. Replace `assets/images/portrait-cutout.webp` with a high-resolution studio cutout for a more faithful portrait.
+- Motion uses a continuous text rail, portrait parallax, scroll reveals, and hover transitions. Reduced-motion preferences are respected. The reference site's WebGL models and branded 3D emblem are not reproduced.
 - Stack Sans Headline and Ruthie font licenses are included in `public/licenses` and copied into the production build.
